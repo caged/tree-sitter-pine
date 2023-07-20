@@ -1,0 +1,53 @@
+====================
+Numbers
+====================
+1 
+---
+
+(program
+  (statement
+    (measurement
+      (inch
+        (number
+          (integer))))))
+
+
+====================
+Large numbers
+====================
+202323
+----
+
+(program
+  (statement
+    (measurement
+      (inch
+        (number
+          (integer))))))
+
+
+====================
+Floats
+====================
+1.5
+----
+
+(program
+  (statement
+    (measurement
+      (inch
+        (number
+          (float))))))
+
+====================
+Fractions
+====================
+1/2
+----
+
+(program
+  (statement
+    (measurement
+      (inch
+        (number
+          (fraction))))))

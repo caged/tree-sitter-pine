@@ -2,22 +2,28 @@ module.exports = grammar({
   name: "PINE",
 
   rules: {
-    source_file: ($) => $._expression,
-    _expression: ($) =>
+    program: ($) => $.statement,
+    statement: ($) =>
       choice(
-        $.inch,
-        $.foot,
-        $.binary_expression
+        $.measurement,
+        $.arithmetic
         // ...
       ),
 
-    binary_expression: ($) =>
-      choice(
-        prec.left(2, seq($._expression, "*", $._expression)),
-        prec.left(1, seq($._expression, "+", $._expression))
-      ),
-    inch: ($) => seq($.number, '"'),
+    plus: ($) => prec.left(1, seq($.arithmetic, "+", $.arithmetic)),
+    minus: ($) => prec.left(1, seq($.arithmetic, "-", $.arithmetic)),
+    times: ($) => prec.left(2, seq($.arithmetic, "*", $.arithmetic)),
+    divide: ($) => prec.left(2, seq($.arithmetic, "/", $.arithmetic)),
+
+    arithmetic: ($) => choice($.plus, $.minus, $.times, $.divide),
+
+    measurement: ($) => choice($.inch, $.foot),
+    inch: ($) => choice(seq($.number, '"'), $.number),
     foot: ($) => seq($.number, "'"),
-    number: ($) => /\d+/,
+
+    number: ($) => choice($.fraction, $.float, $.integer),
+    fraction: ($) => /\d+\/\d+/,
+    float: ($) => /\d+\.\d+/,
+    integer: ($) => /\d+/,
   },
 });
